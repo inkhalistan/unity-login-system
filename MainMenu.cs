@@ -190,8 +190,7 @@ public class MainMenu : MonoBehaviour {
             username = GUILayout.TextField(username, GUILayout.Width(100));
             pswd = GUILayout.PasswordField(pswd, "*"[0], GUILayout.Width(100));
             if (GUILayout.Button("Login")){
-                if (username == "" || pswd == ""){}
-                else DoLogin();
+                if (username != "" && pswd != "")  DoLogin();
             }
             if (GUILayout.Button("Register")) register = true;
         }
