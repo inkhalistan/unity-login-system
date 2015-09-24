@@ -1,10 +1,6 @@
 <?php
 $username = $_REQUEST['username']; 
 $password = $_REQUEST['password']; 
-$host = 'localhost'; 
-$user = 'secondhand_tcg';  
-$dbpassword = '111111';
-$db = 'secondhand_tcg'; 
 
 mysql_connect($host, $user, $dbpassword) or die(mysql_error()); 
 mysql_select_db($db); 
