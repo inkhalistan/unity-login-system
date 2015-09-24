@@ -16,9 +16,6 @@ public class MainMenu : MonoBehaviour {
 	public static bool IsMulti = true;
 	public static GUIStyle mystyle;
 	public static bool CollectionNeedsUpdate = false;
-	public static readonly string SceneNameMainMenu = "MainMenuScene";	
-	public static readonly string SceneNameMenu = "LobbyScene";
-	public static readonly string SceneNameGame = "GameScene";
 	public static string wwwtext="test";
 	public static string username = "";
 	private string pswd = ""; 
@@ -180,7 +177,7 @@ public class MainMenu : MonoBehaviour {
         else if ((LoggedIn) || (PlayOffline == true)){
             if (GUILayout.Button("Single Game", GUILayout.Width(110))){
                 IsMulti = false;
-                Application.LoadLevel(SceneNameGame);
+                Application.LoadLevel("spscene");
             }
             if (!PlayOffline){
                 if (GUILayout.Button("Multiplayer Game", GUILayout.Width(110))) {
