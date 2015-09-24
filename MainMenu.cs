@@ -7,15 +7,9 @@ using System.Text.RegularExpressions;
 using System.Linq;
 
 public class MainMenu : MonoBehaviour {
-    public bool PlayOffline = true;
+	public bool PlayOffline = true;
 	public static int userid;
-	public static TCGData currentsettings;
-    public static TCGData TCGMaker {
-		get {
-            if(currentsettings == null)     currentsettings = (TCGData)Resources.Load("TCGData", typeof(TCGData));
-            return currentsettings;
-		}
-	}
+
 	public static bool DownloadedPlayerDeck = false;
 	public static bool DownloadedPlayerCollection = false;
 	public static bool FirstLoadMenu = true;
@@ -32,7 +26,6 @@ public class MainMenu : MonoBehaviour {
 	private string email = "";
 	private string url = "http://losange-vision.com/registration.php";
 	private string url_login = "http://losange-vision.com/login.php";
-	private string url_latest_cards = "http://losange-vision.com/latestcards.php";
 	private string url_player_deck = "http://losange-vision.com/playerdecks.php";
 	private string url_player_collection = "http://losange-vision.com/playercollection.php";
 	public static string url_update_deck = "http://losange-vision.com/updatedeck.php";
@@ -83,20 +76,6 @@ public class MainMenu : MonoBehaviour {
 		}
         return output;
     }
-	public void DoGetPlayerCollection() {
-		WWWForm form = new WWWForm();
-		form.AddField("userid", userid);
-		WWW w = new WWW(url_player_collection, form);
-		StartCoroutine(GetPlayerCollection(w));
-	}
-	IEnumerator GetPlayerCollection( WWW w) {
-        yield return w;
-		if (w.error ==null) {
-			collectionstring = w.text;
-			DownloadedPlayerCollection = true;
-			playerDeck.pD.Collection = playerDeck.pD.LoadDeck(collectionstring);
-		}
-	}
 	public void DoGetPlayerDeck() {
 		WWWForm form = new WWWForm();
 		form.AddField("userid", userid);
