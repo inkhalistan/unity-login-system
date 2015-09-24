@@ -22,10 +22,9 @@ public class MainMenu : MonoBehaviour {
 	public static bool IsMulti = true;
 	public static GUIStyle mystyle;
 	public static bool CollectionNeedsUpdate = false;
-	public static readonly string SceneNameMainMenu = "MainMenuScene";
-    public static readonly string SceneNameMenu = "LobbyScene";
-    public static readonly string SceneNameGame = "GameScene";
-	public static readonly string SceneNameEditDeck = "EditDeckScene";
+	public static readonly string SceneNameMainMenu = "MainMenuScene";	
+	public static readonly string SceneNameMenu = "LobbyScene";
+	public static readonly string SceneNameGame = "GameScene";
 	public static string wwwtext="test";
 	public static string username = "";
 	private string pswd = ""; 
@@ -158,7 +157,6 @@ public class MainMenu : MonoBehaviour {
 	}
 	IEnumerator RegisterPlayer( WWW w) {
 		yield return w;
-		if (w.error ==null){}
 	}
 	public void DoLogin() {
 		WWWForm form = new WWWForm();
@@ -208,10 +206,9 @@ public class MainMenu : MonoBehaviour {
             if (!PlayOffline){
                 if (GUILayout.Button("Multiplayer Game", GUILayout.Width(110))) {
                     IsMulti = true;
-                    Application.LoadLevel(SceneNameMenu);
+                    Application.LoadLevel("menuscene");
                 }
             }
-            if (GUILayout.Button("Change deck", GUILayout.Width(110))) Application.LoadLevel(SceneNameEditDeck);
         }
         else{
             username = GUILayout.TextField(username, GUILayout.Width(100));
