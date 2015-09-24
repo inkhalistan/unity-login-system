@@ -11,11 +11,9 @@ public class MainMenu : MonoBehaviour {
 	public static int userid;
 
 	public static bool DownloadedPlayerDeck = false;
-	public static bool DownloadedPlayerCollection = false;
 	public static bool FirstLoadMenu = true;
 	public static bool IsMulti = true;
 	public static GUIStyle mystyle;
-	public static bool CollectionNeedsUpdate = false;
 	public static string wwwtext="test";
 	public static string username = "";
 	private string pswd = ""; 
@@ -24,12 +22,11 @@ public class MainMenu : MonoBehaviour {
 	private string url = "http://losange-vision.com/registration.php";
 	private string url_login = "http://losange-vision.com/login.php";
 	private string url_player_deck = "http://losange-vision.com/playerdecks.php";
-	private string url_player_collection = "http://losange-vision.com/playercollection.php";
 	public static string url_update_deck = "http://losange-vision.com/updatedeck.php";
 	private Hashtable[] promocards; 
 	public static List <string> promo_prices = new List<string>();
 	public static List <Vector3> promo_vector = new List<Vector3>();
-	public static string deckstring, collectionstring;
+	public static string deckstring;
 	public static bool LoggedIn = false;
 	private bool register = false;
 	public static float ColliderWidth, ColliderHeight;
@@ -44,15 +41,11 @@ public class MainMenu : MonoBehaviour {
 				Currency.GetCurrency();
 				DoGetLatestCards();
 				DoGetPlayerDeck();
-				DoGetPlayerCollection();
 			}
         	}
 		FirstLoadMenu = false;
 	}
-	public void Update() {
-        if(CollectionNeedsUpdate)   DoGetPlayerCollection();
-        CollectionNeedsUpdate = false;
-	}
+
 	public static Texture2D SpriteToTexture(Sprite sprite) {
         Texture2D croppedTexture = new Texture2D((int)sprite.rect.width, (int)sprite.rect.height);
 		Color[] pixels = sprite.texture.GetPixels(0, 0, (int)sprite.rect.width, (int)sprite.rect.height);
@@ -150,7 +143,6 @@ public class MainMenu : MonoBehaviour {
 				Currency.GetCurrency();
 				DoGetLatestCards();
 				DoGetPlayerDeck();
-				DoGetPlayerCollection();
 			}
 		}
 	}
