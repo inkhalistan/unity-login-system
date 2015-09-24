@@ -43,25 +43,21 @@ public class MainMenu : MonoBehaviour {
 	public static string deckstring, collectionstring;
 	public static bool LoggedIn = false;
 	private bool register = false;
-	public static string message;
 	public static float ColliderWidth, ColliderHeight;
     public void Awake() {
 		CardTemplate instance = CardTemplate.Instance;
     }
 	public void Start() {
-		if(FirstLoadMenu) {
-			Debug.Log("firstload");
-			playerDeck.pD.LoadPlayerDeckOffline();		
-		}
-        else {
+		if(FirstLoadMenu)
+			playerDeck.pD.LoadPlayerDeckOffline();
+        	else {
 			if(LoggedIn) {
 				Currency.GetCurrency();
 				DoGetLatestCards();
 				DoGetPlayerDeck();
 				DoGetPlayerCollection();
 			}
-        }
-        Debug.Log("is logged in = " + LoggedIn);
+        	}
 		FirstLoadMenu = false;
 	}
 	public void Update() {
@@ -84,8 +80,6 @@ public class MainMenu : MonoBehaviour {
 			output[i]=new Hashtable();
 			linearray = lines[i].Split(","[0]);
 			output[i]["id"] = linearray[0];
-			Debug.Log("linearray[0]"+ linearray[0]);
-			Debug.Log("linearray[1]"+ linearray[1]);
 			output[i]["cost"] = linearray[1];
 		}
         return output;
@@ -94,35 +88,29 @@ public class MainMenu : MonoBehaviour {
 		WWWForm form = new WWWForm();
 		form.AddField("userid", userid);
 		WWW w = new WWW(url_player_collection, form);
-		Debug.Log("Downloading collection for user id: "+ userid);
 		StartCoroutine(GetPlayerCollection(w));
 	}
 	IEnumerator GetPlayerCollection( WWW w) {
         yield return w;
 		if (w.error ==null) {
 			collectionstring = w.text;
-			Debug.Log("downloaded collection: "+ w.text);
 			DownloadedPlayerCollection = true;
 			playerDeck.pD.Collection = playerDeck.pD.LoadDeck(collectionstring);
 		}
-		else message +="ERROR:" +w.error + "\n";
 	}
 	public void DoGetPlayerDeck() {
 		WWWForm form = new WWWForm();
 		form.AddField("userid", userid);
 		WWW w = new WWW(url_player_deck, form);
-		Debug.Log("downloading deck for user id: "+ userid);
 		StartCoroutine(GetPlayerDeck(w));
 	}
 	IEnumerator GetPlayerDeck( WWW w) {
 		yield return w;
 		if (w.error ==null) {
 			deckstring = w.text;
-			Debug.Log("downloaded deck: "+ w.text);
 			DownloadedPlayerDeck = true;
 			playerDeck.pD.Deck =  playerDeck.pD.LoadDeck(deckstring);
 		}
-		else    message +="ERROR:" +w.error + "\n";
 	}
 	public void DoGetLatestCards() {
 		WWW w = new WWW(url_latest_cards);
@@ -138,12 +126,12 @@ public class MainMenu : MonoBehaviour {
 			int i=0;
 			foreach (Hashtable foundcard in promocards) {
 			Index = System.Int32.Parse(foundcard["id"].ToString());
-			Debug.Log("got promo card index:" + Index);
 			GameObject promo_card_obj = new GameObject ();
 			card promo_card = promo_card_obj.AddComponent<card>() as card; 
 			promo_card.Index = Index;
 			DbCard dbcard = MainMenu.TCGMaker.cards.Where(x => x.id == Index).SingleOrDefault();
-			if (dbcard == null)     Debug.LogWarning("card not found in the new db!");
+			if (dbcard == null)     
+				Debug.LogWarning("card not found in the new db!");
 			promo_card.Type = dbcard.type;
 			promo_card.Cost = dbcard.cost;
 			promo_card.CardColor = dbcard.color;
@@ -159,7 +147,6 @@ public class MainMenu : MonoBehaviour {
 			i++;
 			}
 		}
-		else    message +="ERROR:" +w.error + "\n";
 	}
 	public void DoRegister() {
 		WWWForm form = new WWWForm();
@@ -171,8 +158,7 @@ public class MainMenu : MonoBehaviour {
 	}
 	IEnumerator RegisterPlayer( WWW w) {
 		yield return w;
-		if (w.error ==null)     message +=w.text;
-		else    message +="ERROR:" +w.error + "\n";
+		if (w.error ==null){}
 	}
 	public void DoLogin() {
 		WWWForm form = new WWWForm();
@@ -186,16 +172,15 @@ public class MainMenu : MonoBehaviour {
 		if(w.error ==null) {
 			if (w.text.Contains("login-SUCCESS")) {
 				userid = System.Int32.Parse(Regex.Match(w.text,"(?<=login-SUCCESS)[0-9]+").ToString());
-				message ="Logged in!";
 				LoggedIn = true;
 				Currency.GetCurrency();
 				DoGetLatestCards();
 				DoGetPlayerDeck();
 				DoGetPlayerCollection();
 			}
-			else    message +=w.text;
+			else{}
 		}
-		else    message +="ERROR:" +w.error + "\n";
+		else{}
 	}
     public void OnGUI() {
 		if (LoggedIn) {
@@ -206,7 +191,6 @@ public class MainMenu : MonoBehaviour {
 		}
         GUILayout.Label("deck count" + playerDeck.pD.Deck.Count.ToString());
         GUILayout.Box(Currency.messagecurrency);
-		if(message!="")     GUILayout.Box(message);
         if (register){
             username = GUILayout.TextField(username);
             pswd = GUILayout.TextField(pswd);
@@ -214,10 +198,8 @@ public class MainMenu : MonoBehaviour {
             repass = GUILayout.TextField(repass);
             if (GUILayout.Button("Back")) register = false;
             if (GUILayout.Button("Register")){
-                message = "";
-                if (username == "" || pswd == "" || repass == "" || email == "") message += "Please enter all the fields \n";
+                if (username == "" || pswd == "" || repass == "" || email == ""){}
                 else if (pswd == repass) DoRegister();
-                else message += "Your password does not match \n";
             }
         }
         else if ((LoggedIn) || (PlayOffline == true)){
@@ -237,7 +219,7 @@ public class MainMenu : MonoBehaviour {
             username = GUILayout.TextField(username, GUILayout.Width(100));
             pswd = GUILayout.PasswordField(pswd, "*"[0], GUILayout.Width(100));
             if (GUILayout.Button("Login")){
-                if (username == "" || pswd == "") message += "Please enter all the fields \n";
+                if (username == "" || pswd == ""){}
                 else DoLogin();
             }
             if (GUILayout.Button("Register")) register = true;
