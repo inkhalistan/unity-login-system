@@ -18,6 +18,15 @@ function fetchinfo($rowname,$tablename,$finder,$findervalue) {
 	return $row[$rowname];
 }
 
+/* The \b in the pattern indicates a word boundary, so only the distinct
+ * word "web" is matched, and not a word partial like "webbing" or "cobweb" */
+if (preg_match("/^[a-zA-Z0-9\s\.,!?]*$/", "PHP is the web scripting language of choice.")) {
+    echo "A match was found.";
+} else {
+    echo "A match was not found.";
+}
+
+
 mysql_connect($host, $user, $dbpassword) or die(mysql_error()); 
 mysql_select_db($db); 
 
