@@ -178,9 +178,7 @@ public class MainMenu : MonoBehaviour {
 				DoGetPlayerDeck();
 				DoGetPlayerCollection();
 			}
-			else{}
 		}
-		else{}
 	}
     public void OnGUI() {
 		if (LoggedIn) {
