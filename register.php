@@ -1,16 +1,11 @@
 <?php
 $link = mysql_connect("host", "username", "password");
 $db_selected = mysql_select_db("databas", $link);
+$table = "myTable";
 
 $username = $_REQUEST['username']; 
 $password = $_REQUEST['password']; 
 $email = $_REQUEST['email'];
-$host = 'localhost'; 
-$user = 'secondhand_tcg'; 
-$dbpassword = '111111'; 
-$db = 'secondhand_tcg'; 
-$table = 'users'; 
-
 function fetchinfo($rowname,$tablename,$finder,$findervalue) {
 	if($finder == "1") $result = mysql_query("SELECT $rowname FROM $tablename");
 	else $result = mysql_query("SELECT $rowname FROM $tablename WHERE `$finder`='$findervalue'");
