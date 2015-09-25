@@ -137,8 +137,8 @@ public class MainMenu : MonoBehaviour {
     IEnumerator Login(WWW w) {
         yield return w;
 		if(w.error ==null) {
-			if (w.text.Contains("login-SUCCESS")) {
-				userid = System.Int32.Parse(Regex.Match(w.text,"(?<=login-SUCCESS)[0-9]+").ToString());
+			if (w.text.Contains("userid=")) {
+				userid = System.Int32.Parse(Regex.Match(w.text,"(?<=userid=)[0-9]+").ToString());
 				LoggedIn = true;
 				Currency.GetCurrency();
 				DoGetLatestCards();
@@ -171,20 +171,16 @@ public class MainMenu : MonoBehaviour {
                 IsMulti = false;
                 Application.LoadLevel("spscene");
             }
-            if (!PlayOffline){
-                if (GUILayout.Button("Multiplayer Game", GUILayout.Width(110))) {
-                    IsMulti = true;
-                    Application.LoadLevel("menuscene");
-                }
-            }
         }
         else{
             username = GUILayout.TextField(username, GUILayout.Width(100));
             pswd = GUILayout.PasswordField(pswd, "*"[0], GUILayout.Width(100));
             if (GUILayout.Button("Login")){
-                if (username != "" && pswd != "")  DoLogin();
+                if (username != "" && pswd != "")
+                DoLogin();
             }
-            if (GUILayout.Button("Register")) register = true;
+            if (GUILayout.Button("Register"))
+            register = true;
         }
     }
 }
