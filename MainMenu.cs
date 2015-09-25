@@ -11,7 +11,6 @@ public class MainMenu : MonoBehaviour {
 	public static int userid;
 
 	public static bool IsMulti = true;
-	public static GUIStyle mystyle;
 	public static string wwwtext="test";
 	public static string username = "";
 	private string pswd = ""; 
@@ -19,8 +18,6 @@ public class MainMenu : MonoBehaviour {
 	private string email = "";
 	private string url = "http://losange-vision.com/registration.php";
 	private string url_login = "http://losange-vision.com/login.php";
-	public static bool LoggedIn = false;
-	private bool register = false;
 
 	public void DoRegister() {
 		WWWForm form = new WWWForm();
@@ -55,16 +52,10 @@ public class MainMenu : MonoBehaviour {
             pswd = GUILayout.TextField(pswd);
             email = GUILayout.TextField(email);
             repass = GUILayout.TextField(repass);
-            if (GUILayout.Button("Back")) register = false;
+
             if (GUILayout.Button("Register")){
                 if (username == "" || pswd == "" || repass == "" || email == ""){}
                 else if (pswd == repass) DoRegister();
-            }
-        }
-        else if ((LoggedIn) || (PlayOffline == true)){
-            if (GUILayout.Button("Single Game", GUILayout.Width(110))){
-                IsMulti = false;
-                Application.LoadLevel("spscene");
             }
         }
         else{
